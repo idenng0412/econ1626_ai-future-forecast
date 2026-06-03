@@ -23,6 +23,16 @@ However, these gains accrue mainly to firms like Amazon, which expects to automa
 
 While output per worker rises as firms become more productive, a larger share of the resulting gains is retained as profit rather than distributed through wage increases, causing labour's share of income to decline. As autonomous systems increasingly substitute for routine workers towards 2030, this productivity–wage gap is likely to widen, with the benefits of automation accruing disproportionately to capital owners and higher-skilled workers.
 
+## Route Optimisation and Supply CHain Coordination
+
+At the country level, AI-driven coordination systems and route-optimisation technologies analyse traffic conditions, weather disruptions, supplier performance, and delivery schedules to improve decision-making across supply networks. By managing increasingly complex supply chains more efficiently, firms can reduce transaction and coordination costs while improving delivery reliability.
+However, the economic impact of AI extends beyond operational efficiency, as lower coordination costs alter the make-versus-buy and location decisions that transaction-cost economics identifies as fundamental determinants of supply-chain structure (Coase 1937; Williamson 1985). As coordination ceases to be the binding constraint and automation narrows the labour-cost gap, firms become less dependent on geographically dispersed supply chains designed around cheap labour, favouring regionalisation and reshoring. 
+
+Evidence of this shift is already visible: approximately two million manufacturing jobs have returned to the United States since 2010, with automation identified as a key driver (Moser and Kelley 2024). By 2030, increasingly autonomous supply chain coordination is likely to accelerate this trend, shifting competitive advantage away from low-cost labour and towards data, technology, and organisational capabilities. While advanced economies may benefit from increased domestic production, developing economies that rely on labour-cost advantages could face declining competitiveness and reduced participation in global supply chains.  
+
+Together, these three channels describe a productivity gain that widens inequality as it grows: across firms, workers, and nations. Whether that trajectory holds, or whether policy can bend it, is the question the next section takes up.
+
+
 
 
 
