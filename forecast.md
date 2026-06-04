@@ -36,11 +36,60 @@ AI also changes where production happens, not just how efficiently it runs. By m
 
 Evidence of this shift is already visible: approximately two million manufacturing jobs have returned to the United States since 2010, with automation identified as a key driver (Moser and Kelley 2024). By 2030, increasingly autonomous supply chain coordination is likely to accelerate this trend, shifting competitive advantage away from low-cost labour and towards data, technology, and organisational capabilities. While advanced economies may benefit from increased domestic production, developing economies that rely on labour-cost advantages could face declining competitiveness and reduced participation in global supply chains.  
 
+# Scenarios forecast 
+## Baseline: AI-Augmented Logistic 
+
+Under this scenario, AI-enabled predictive analytics, warehouse automation, and route optimisation become standard operational tools across the logistics sector, yet value remains concentrated among hyperscalers, while AI complements rather than replaces human decision-making. Diffusion lags as data readiness, integration, and skills shortages continue to constrain adoption, resulting in productivity gains emerging gradually rather than through sudden disruption. This scenario reflects current evidence that most firms use AI, yet few capture clear earnings gains (Singla et al. 2025).
+
+At the firm level, logistics costs continue to fall as forecasting accuracy and operational efficiency improve, but productivity gains remain concentrated among high performers whose superior access to data, computing resources, and capital is difficult for smaller ones to replicate. However, the concentration channel builds slowly as diffusion lag gives smaller firms room to adapt while data-rich incumbents pull ahead.
+
+At the labour level, displacement is partial and uneven, cushioned by persistent labour shortages that absorb some workers released by automation. As routine roles decline and technical roles grow, governments implement moderate retraining initiatives that help some displaced workers transition.
+
+At the global level, regionalisation proceeds steadily as coordination costs fall and automation reduces dependence on labour-cost arbitrage; the offshore base erodes gradually rather than collapsing, while policy remains reactive rather than anticipatory.
+
+By 2030, the result is a moderately more productive and more concentrated industry: inequalities between firms and workers widen gradually rather than dramatically, but the extremes of broad sharing and runaway concentration are both avoided.
+
+## Upside: Autonomous Supply Networks 
+
+Under the upside scenario, advances in agentic AI systems combine with wider access to data, cloud infrastructure, and affordable automation tools, lowering adoption barriers for small- and mid-sized firms. As technologies once reserved for hyperscalers become more widely available, the adoption and development of autonomous systems accelerate across supply networks. However, this outcome depends on active reskilling initiatives, competition rules, and data-access policies that shape how productivity gains are distributed.
+
+At the firm level, productivity growth accelerates as forecasting, automation, and route optimisation become more widely available across the sector. Although data advantages persist, competition and interoperability rules keep markets contestable, allowing smaller firms to compete rather than merely adapt.
+
+At the labour level, this scenario assumes that governments successfully manage labour-market transition through large-scale investment in reskilling programmes supported by persistent labour shortages. As a result, new occupations emerge quickly enough to absorb displaced workers into higher-value roles, preventing large-scale unemployment and limiting the widening of the productivity–wage gap.
+
+At the global level, developing economies gain access to the similar tools as advanced economies, allowing them to move up the value chain rather than simply losing their cost advantage. 
+
+Under these conditions by 2030, AI becomes a source of widespread prosperity rather than concentrated advantage, creating a more productive and resilient logistics system while consumers benefit from lower prices, faster delivery and greater product availability.
+
+## Downside: Concentrated and Fragile Logistics
+Under the downside scenario, AI adoption succeeds technologically but produces significant economic and social challenges. Large logistics platforms achieve substantial productivity gains through automation and data-driven coordination, but weak competition policies and absent reskilling support allow these gains to concentrate among a few dominant firms.
+
+At the firm level, data scale becomes the critical source of competitive advantage, pushing the concentration channel to its extreme. In this case, incumbents capture most productivity gains and increase barriers to entry as smaller firms struggle to replicate the datasets, computing infrastructure, and capital investment required to compete. This results in a winner-take-most market rather than gradual concentration.
+
+At the labour level, displacement accelerates as automation displaces routine workers faster than new roles emerge. With this weak reabsorption, labour’s wage share falls sharply and inequality widens. It is projected that more than 92 million roles could be displaced by emerging technologies by 2030, highlighting the scale of disruption if transition policies fail to keep pace (World Economic Forum 2025).
+
+At the global level, developing economies that relied on labour-cost arbitrage experience declining participation in global supply chains, deepening economic divergence between advanced and developing economies.
+
+By 2030, logistics networks become more productive but also more concentrated, widening inequality between dominant platforms and smaller firms while workers and developing economies bear much of the adjustment cost. In this scenario, technological progress continues but rising market power and uneven distribution of gains generate public resistance to further AI adoption if broader social welfare benefits are left unchecked.
+
+# Policy Playbook
+| Policy Option | Who is Responsible | When to Deploy | Limitation | Mitigation | KPIs |
+|---|---|---|---|---|---|
+| **Competition and Data Access Policy** | ACCC, European Commission, data-protection authorities, governments, major platforms | Early / pre-emptive, before data lock-in becomes entrenched and dominance is established | Overregulation may deter innovation, and data sharing may raise privacy and IP concerns. | Targeted contestability rules, interoperability standards, and fair cloud access, accompanied by clear data governance and merger review | Share of logistics AI capacity held by largest firms; SME AI adoption rate; market concentration indicators |
+| **Workforce Transition and Reskilling Programmes** | Governments, Department of Employment and Workplace Relations, Jobs and Skills Australia, TAFE, universities, firms, unions | Before and during automation rollout | Training alone is unable to address productivity–wage gaps as labour’s bargaining power weakens. | Sector-specific training programmes paired with wage insurance and labour protection | Reabsorption rate; share of displaced workers re-employed within 12 months; wage recovery after transition |
+| **Global Adjustment and Inclusive Supply Chains** | WTO, UNCTAD, World Bank, development-finance institutions, advanced and developing-country governments | Early and long-term, before global divergence becomes entrenched | Advanced economies have weak incentives to support developing economies as future competitors. | Joint cross-border initiatives that create mutual benefits | Developing economies’ share of value-added in AI-enabled supply chains; digital infrastructure access; supplier AI adoption rate |
+## 1.	Competition and Data Access Policy 
+
+Because AI performance relies on data scale, large firms can leverage this advantage to capture markets while creating barriers to entry for smaller competitors. The first policy lever therefore aims to prevent AI-driven market concentration from becoming a winner-take-most dynamic through competition and data-access policy. Government should treat data scale, rather than data itself, as a source of market power and restore contestability through interoperability and portability requirements. Because these advantages compound over time, regulators must act decisively before lock-in becomes entrenched and dominance is established. However, rules must be carefully calibrated so they do not deter the investment and innovation. Data-sharing mandates may also introduce privacy and intellectual-property concerns, so contestability rules must be paired with clear governance for data access and merger review.
 
 
+## 2.	Workforce Transition and Reskilling Programmes 
 
+As AI automation raises productivity by substituting for routine warehouse and logistics tasks and workers are displaced faster than new technical roles are created. Therefore, the second policy lever targets the labour channel by managing automation displacement through transition rather than resisting it. Reskilling programmes should be sector-specific, targeted at workers most exposed to automation, and linked to real jobs in robotics maintenance, data analytics, systems supervision, and logistics coordination to turn displacement into a transition towards higher-value work. However, reskilling alone cannot close the productivity gaps, as automation substitution weakens workers' bargaining power even where retaining succeeds. Reskilling must therefore be paired with wage insurance and labour protection and in place before displacement accelerates.
 
+## 3.	Global Adjustment and Inclusive Supply Chains
 
+As competitiveness shifts from cheap labour towards data and capital, developing economies that relied on labour-cost arbitrage face exclusion rather than mere adjustment, and without access to the underlying capabilities the gap becomes self-reinforcing. Therefore, this policy lever targets the geography channel through international policy that prevents the structural exclusion of developing economies from being locked out of the trade participation and widening inequality between countries. The rationale for international action is that technology transfer, development finance, and enabling trade rules can help these economies move up the value chain instead of being excluded. However, advanced economies have weak incentives to assist future competitors; that requires joint cross-border initiatives such as co-funded digital infrastructure projects and supplier-upgrading partnerships that create mutual benefits. As developing countries are able to adopt AI technologies and participate in higher-value logistics activities, advanced economies benefit through more resilient supplier networks and reduced geopolitical supply-chain risk.
 
 
 
