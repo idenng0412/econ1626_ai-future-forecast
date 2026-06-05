@@ -16,7 +16,7 @@ As a general-purpose technology, AI extends beyond physical automation into cogn
 
 AI processes large volumes of real-time data into accurate forecasts, reducing the uncertainty that forces firms to hold costly safety stock and over-provision capacity. As forecasts tighten, firms run leaner inventories, suffer fewer stockouts, and raise vehicle and warehouse utilisation. Mechanically, these gains widen margins and pass partly to consumers as lower prices, while dampening the bullwhip effect through improved allocative efficiency (Lee, Padmanabhan & Whang 1997).
 
-However, forecasting accuracy depends on data scale, where firms with the largest datasets can train the better models and win more business, creating a self-reinforcing flywheel (Jones & Tonetti 2020). As agentic systems become deeply involved in planning and execution across the chain by 2030, this process intensifies the divergence at the firm level, where value gains concentrate among hyperscalers and established firms while dampening competition as smaller ones struggle to keep pace (Singla et al. 2025).
+However, forecasting accuracy depends on data scale: firms with the largest datasets can train the better models and win more business, creating a self-reinforcing flywheel (Jones & Tonetti 2020). As agentic systems become deeply involved in planning and execution across the chain by 2030, this process intensifies the divergence at the firm level, where value gains concentrate among hyperscalers and established firms while smaller ones struggle to keep pace (Singla et al. 2025).
 
 ## Warehouse Automation, Labour Displacement and the Productivity-Wage Gap
 
