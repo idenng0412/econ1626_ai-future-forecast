@@ -61,6 +61,7 @@ At the global level, developing economies gain access to the similar tools as ad
 Under these conditions by 2030, AI becomes a source of widespread prosperity rather than concentrated advantage, creating a more productive and resilient logistics system while consumers benefit from lower prices, faster delivery and greater product availability.
 
 ## Downside: Concentrated and Fragile Logistics
+
 Under the downside scenario, AI adoption succeeds technologically but produces significant economic and social challenges. Large logistics platforms achieve substantial productivity gains through automation and data-driven coordination, but weak competition policies and absent reskilling support allow these gains to concentrate among a few dominant firms.
 
 At the firm level, data scale becomes the critical source of competitive advantage, pushing the concentration channel to its extreme. In this case, incumbents capture most productivity gains and increase barriers to entry as smaller firms struggle to replicate the datasets, computing infrastructure, and capital investment required to compete. This results in a winner-take-most market rather than gradual concentration.
@@ -69,7 +70,8 @@ At the labour level, displacement accelerates as automation displaces routine wo
 
 At the global level, developing economies that relied on labour-cost arbitrage experience declining participation in global supply chains, deepening economic divergence between advanced and developing economies.
 
-By 2030, logistics networks become more productive but also more concentrated, widening inequality between dominant platforms and smaller firms while workers and developing economies bear much of the adjustment cost. In this scenario, technological progress continues but rising market power and uneven distribution of gains generate public resistance to further AI adoption if broader social welfare benefits are left unchecked.
+By 2030, logistics networks become more productive but also more concentrated, widening inequality between dominant platforms and smaller firms while workers and developing economies bear much of the adjustment cost. In this scenario, technological progress continues, but rising market power and uneven distribution of gains generate public resistance to further AI adoption if broader social welfare benefits are left unchecked.
+
 
 # Policy Playbook
 | Policy Option | Who is Responsible | When to Deploy | Limitation | Mitigation | KPIs |
