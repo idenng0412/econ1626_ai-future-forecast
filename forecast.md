@@ -28,7 +28,7 @@ Although output per worker rises as firms become more productive, these gains do
 
 As autonomous systems increasingly substitute for routine workers towards 2030, this productivity–wage gap is likely to widen, with the benefits of automation accruing disproportionately to capital owners and higher-skilled workers.
 
-## Route Optimisation and Supply CHain Coordination
+## Route Optimisation and Global Supply Chain Coordination
 
 At the global level, AI-driven coordination systems and route-optimisation technologies analyse traffic conditions, weather disruptions, supplier performance, and delivery schedules to improve decision-making across supply networks. By managing increasingly complex supply chains more efficiently, firms can reduce transaction and coordination costs while improving delivery reliability.
 
