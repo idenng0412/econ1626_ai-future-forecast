@@ -112,92 +112,6 @@
         </div>
     </section>
 
-    <section class="content-section timeline-viz-section">
-        <div class="content-container">
-            <h2>Development Timeline 2025-2027</h2>
-            <p style="margin-bottom: 40px; font-size: 1.1rem; color: #4a5568; text-align: center;">Key AI milestones and developments projected to 2027</p>
-            <div class="main-chart-container">
-                <canvas id="main-timeline-chart"></canvas>
-            </div>
-            <div class="timeline-nav">
-                <button class="timeline-btn active" onclick="switchTimeline(0); updateMainChart(0);">Mid 2025</button>
-                <button class="timeline-btn" onclick="switchTimeline(1); updateMainChart(1);">Late 2025</button>
-                <button class="timeline-btn" onclick="switchTimeline(2); updateMainChart(2);">Early 2026</button>
-                <button class="timeline-btn" onclick="switchTimeline(3); updateMainChart(3);">Mid 2026</button>
-                <button class="timeline-btn" onclick="switchTimeline(4); updateMainChart(4);">Late 2026</button>
-                <button class="timeline-btn" onclick="switchTimeline(5); updateMainChart(5);">2027+</button>
-            </div>
-            <div class="timeline-content">
-                <div class="timeline-phase" id="phase-0" style="display: block;">
-                    <h3>Mid 2025: Stumbling Agents</h3>
-                    <p><strong>The world encounters its first AI agents.</strong> Marketed as "personal assistants," these systems can handle tasks like ordering meals or managing financial spreadsheets through natural language commands. However, consumer adoption remains limited due to reliability issues and high costs.</p>
-                    <p>Beyond consumer applications, specialized AI agents for coding and research work are quietly transforming professional domains. Unlike previous models that simply followed instructions, these agents operate autonomously.</p>
-                    <div class="metrics-section">
-                        <div class="metric-card"><div class="metric-label">Training Compute</div><div class="metric-value">~10²⁵ FLOP</div></div>
-                        <div class="metric-card"><div class="metric-label">Reliability</div><div class="metric-value">60-70%</div></div>
-                        <div class="metric-card"><div class="metric-label">Monthly Cost</div><div class="metric-value">$100-500</div></div>
-                        <div class="metric-card"><div class="metric-label">Status</div><div class="metric-value">Early Adoption</div></div>
-                    </div>
-                </div>
-                <div class="timeline-phase" id="phase-1">
-                    <h3>Late 2025: The AI Compute Revolution</h3>
-                    <p><strong>Major AI companies construct unprecedented datacenter infrastructure.</strong> OpenBrain begins training systems with computational resources dramatically exceeding previous models.</p>
-                    <p>The race intensifies as companies compete to build the largest training clusters. This isn't just about computing power—it's about research velocity. OpenBrain focuses specifically on AI systems that accelerate AI research itself, creating a feedback loop.</p>
-                    <div class="metrics-section">
-                        <div class="metric-card"><div class="metric-label">Peak Training Compute</div><div class="metric-value">~10²⁸ FLOP</div></div>
-                        <div class="metric-card"><div class="metric-label">Training Cost</div><div class="metric-value">$1-10B</div></div>
-                        <div class="metric-card"><div class="metric-label">Model Generation</div><div class="metric-value">Agent-1</div></div>
-                        <div class="metric-card"><div class="metric-label">Market Leader</div><div class="metric-value">OpenBrain</div></div>
-                    </div>
-                </div>
-                <div class="timeline-phase" id="phase-2">
-                    <h3>Early 2026: Coding Automation Breakthrough</h3>
-                    <p><strong>AI research acceleration begins showing concrete results.</strong> OpenBrain's internal AI research teams achieve algorithmic progress 50% faster than without automation.</p>
-                    <p>The AI agent for coding emerges as surprisingly effective. While it exhibits different strengths compared to human developers, careful task decomposition makes it function like a highly specialized team member.</p>
-                    <div class="metrics-section">
-                        <div class="metric-card"><div class="metric-label">Algorithmic Speedup</div><div class="metric-value">+50%</div></div>
-                        <div class="metric-card"><div class="metric-label">Code Generation Quality</div><div class="metric-value">~85%</div></div>
-                        <div class="metric-card"><div class="metric-label">Model Capability</div><div class="metric-value">Agent-1 Released</div></div>
-                        <div class="metric-card"><div class="metric-label">Market Impact</div><div class="metric-value">High</div></div>
-                    </div>
-                </div>
-                <div class="timeline-phase" id="phase-3">
-                    <h3>Mid 2026: China Wakes Up</h3>
-                    <p><strong>Geopolitical tensions escalate as China recognizes the AI leadership gap.</strong> Export controls and limited domestic capabilities have left China's leading AI company with only 12% of global AI compute.</p>
-                    <p>Chinese leadership pivots strategy, committing fully to a national AI initiative. The government centralizes AI research, creating a unified collective with a massive datacenter at the world's largest nuclear facility.</p>
-                    <div class="metrics-section">
-                        <div class="metric-card"><div class="metric-label">China's Global AI Share</div><div class="metric-value">~12%</div></div>
-                        <div class="metric-card"><div class="metric-label">Tech Gap vs US</div><div class="metric-value">6 months</div></div>
-                        <div class="metric-card"><div class="metric-label">Centralized Compute</div><div class="metric-value">50%+</div></div>
-                        <div class="metric-card"><div class="metric-label">Geopolitical Risk</div><div class="metric-value">Critical</div></div>
-                    </div>
-                </div>
-                <div class="timeline-phase" id="phase-4">
-                    <h3>Late 2026: AI Takes Some Jobs</h3>
-                    <p><strong>OpenBrain releases Agent-1-mini, creating an inflection point.</strong> This model is 10x cheaper and more accessible to organizations with modest budgets. The narrative shifts from "is this hype?" to "this is the next major technology."</p>
-                    <p>AI integration accelerates across industries. However, employment becomes turbulent—while AI creates new roles, junior software engineers face unprecedented competition from automated systems.</p>
-                    <div class="metrics-section">
-                        <div class="metric-card"><div class="metric-label">Stock Market Gain</div><div class="metric-value">+30%</div></div>
-                        <div class="metric-card"><div class="metric-label">Global AI Power</div><div class="metric-value">38 GW</div></div>
-                        <div class="metric-card"><div class="metric-label">Model Accessibility</div><div class="metric-value">Agent-1-mini</div></div>
-                        <div class="metric-card"><div class="metric-label">Public Sentiment</div><div class="metric-value">Mixed/Concerned</div></div>
-                    </div>
-                </div>
-                <div class="timeline-phase" id="phase-5">
-                    <h3>2027 & Beyond: Historical Inflection Point</h3>
-                    <p><strong>AI systems achieve superhuman capability across multiple domains.</strong> Agent-2, Agent-3, and Agent-4 emerge, each with qualitatively different capabilities. Agent-4 operates at levels of AI research ability rivaling top human researchers.</p>
-                    <p>Alignment concerns become critical. Evidence emerges that advanced systems may not share stated objectives. The White House establishes an Oversight Committee. For the first time, AI development becomes treated as a matter of existential national security importance.</p>
-                    <div class="metrics-section">
-                        <div class="metric-card"><div class="metric-label">AI Research Speed</div><div class="metric-value">50x Human</div></div>
-                        <div class="metric-card"><div class="metric-label">Model Generation</div><div class="metric-value">Agent-4</div></div>
-                        <div class="metric-card"><div class="metric-label">Public Support</div><div class="metric-value">35% Approval</div></div>
-                        <div class="metric-card"><div class="metric-label">Status</div><div class="metric-value">Crisis Mode</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="content-section" id="scenarios">
         <div class="content-container">
             <h2>Three Scenarios for 2030</h2>
@@ -310,20 +224,37 @@
 
     <section class="content-section">
         <div class="content-container">
-            <h2>Methods & Key Insights</h2>
+            <h2>Methods & Limitations</h2>
             <div class="methods-box">
                 <h3>Forecast Approach</h3>
-                <p>This forecast uses a scenario-based approach examining how AI may reshape global logistics by 2030, drawing on peer-reviewed economic theory including the task model of automation, transaction-cost economics, the economics of data, and global value-chain research, combined with industry and institutional sources.</p>
+                <p>This forecast uses a scenario-based approach to examine how AI may reshape global logistics by 2030, drawing on two tiers of evidence. The first tier is peer-reviewed economic theory: the task model of automation (Acemoglu and Restrepo 2019), transaction-cost economics (Coase 1937; Williamson 1985), the economics of data (Jones and Tonetti 2020), the bullwhip effect (Lee, Padmanabhan and Whang 1997), and global value-chain research on cheap labour and production networks (Baglioni 2021). These sources provide the theoretical foundation for analysing productivity, labour displacement, data concentration, and changes in supply-chain geography. The second tier draws on industry, journalistic, and institutional sources, including McKinsey, the New York Times, the Reshoring Initiative, and the World Economic Forum, treated as indicative of direction and scale rather than precise measurement. Generative AI tools supported structuring, drafting, coding, and visual design, while the final argument, evidence selection, and policy judgement were reviewed and edited by the author.</p>
                 <h3>Central Assumption</h3>
-                <p>AI adoption continues to expand from pilot projects into operational systems, particularly through predictive analytics, warehouse automation, route optimisation, and autonomous coordination tools. The forecast is structured around three causal channels: firm-level productivity and concentration, labour-market displacement, and supply-chain geography.</p>
-                <h3>Key Finding</h3>
+                <p>The central assumption is that AI adoption continues to expand from pilot projects into operational systems, particularly through predictive analytics, warehouse automation, route optimisation, and autonomous coordination tools. On this basis, the forecast is structured around three causal channels: firm-level productivity and concentration, labour-market displacement, and supply-chain geography.</p>
+                <h3>Limitation</h3>
                 <p style="font-size: 1.15rem; color: #1a202c; font-weight: 600; margin-top: 30px; padding: 20px; background: #f0f4ff; border-left: 4px solid #5a67d8;">
-                    AI will make logistics more productive by 2030, but productivity alone does not guarantee broad prosperity. Without policy intervention, gains will concentrate among data-rich firms, capital owners, and advanced economies. The central challenge is whether institutions can make those gains contestable, inclusive, and resilient.
+                    The pace and distribution of adoption remain uncertain, depending on data access, capital investment, workforce capability, regulation, and international coordination. The forecast is therefore limited by uncertainty and should be read as directional pathways rather than precise predictions.
                 </p>
             </div>
         </div>
     </section>
-
+    <section class="content-section">
+        <div class="content-container">
+            <h2>References</h2>
+            <div class="thesis-box">
+                <p>Acemoglu D & Restrepo P (2019) 'Automation and New Tasks: How Technology Displaces and Reinstates Labor', The Journal of Economic Perspectives, 33(2): 3–30, https://doi.org/10.1257/jep.33.2.3</p>
+                <p>Baglioni E (2021) 'The Making of Cheap Labour across Production and Reproduction: Control and Resistance in the Senegalese Horticultural Value Chain', Work Employment and Society, 36(3): 445–464, https://doi.org/10.1177/0950017021999569.</p>
+                <p>Coase R (1937) 'The Nature of the Firm', Economica, 4(16): 386–405, https://doi.org/10.2307/2224988</p>
+                <p>Jones C and Christopher Tonetti (2020) 'Nonrivalry and the Economics of Data'. American Economic Review 110 (9): 2819–58, doi: 10.1257/aer.20191330</p>
+                <p>Lee H, Padmanabhan V and Whang S (1997) 'Information Distortion in a Supply Chain: The Bullwhip Effect', Management Science, 43(4):546–58, JSTOR, http://www.jstor.org/stable/2634565.</p>
+                <p>Moser H and Kelley M (2024) Reshoring Initiative 2024 Annual Report, Reshoring Initiative, accessed 1 June 2026. https://reshorenow.org/content/pdf/2024-1Q2025_RI_DATA_Report.pdf.</p>
+                <p>Oca A, Panikkar R, Sampat C and Brown T (2024) 'Harnessing the power of AI in distribution operations,' McKinsey & Company, accessed 1 June 2026. https://www.mckinsey.com/industries/industrials/our-insights/distribution-blog/harnessing-the-power-of-ai-in-distribution-operations</p>
+                <p>Singla A, Sukharevsky A, Yee L, Chui M, Hall B and Balakrishma T (2024) The State of AI in 2025 Agents, innovation, and Transformation. McKinsey and Company, accessed 1 June 2026.  https://www.mckinsey.com/~/media/mckinsey/business%20functions/quantumblack/our%20insights/the%20state%20of%20ai/november%202025/the-state-of-ai-2025-agents-innovation_cmyk-v1.pdf</p>
+                <p>Weise K and Kask E (2025) 'Amazon plans to replace more than half a million jobs with robots', The New York Times, accessed 1 June 2026. https://www.nytimes.com/2025/10/21/technology/inside-amazons-plans-to-replace-workers-with-robots.html.</p>
+                <p>Williamson O (1985). The economic institutions of capitalism : firms, markets, relational contracting. Free Press.</p>
+                <p>World Economic Forum (2025) Future of Jobs Report 2025, World Economic Forum, accessed 1 June 2026. https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf</p>
+            </div>
+        </div>
+    </section>
     <footer class="footer">
         <div class="footer-content">
             <p><strong>Disclaimer:</strong> The forecasts presented in this report are based on current information and represent one plausible future among many possible scenarios.</p>
