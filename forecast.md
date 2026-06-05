@@ -34,6 +34,7 @@ AI also changes where production happens, not just how efficiently it runs. By m
 
 Evidence of this shift is already visible: approximately two million manufacturing jobs have returned to the United States since 2010, with automation identified as a key driver (Moser and Kelley 2024). By 2030, increasingly autonomous supply chain coordination is likely to accelerate this trend, shifting competitive advantage away from low-cost labour and towards data, technology, and organisational capabilities. While advanced economies may benefit from increased domestic production, developing economies that rely on labour-cost advantages could face declining competitiveness and reduced participation in global supply chains.  
 
+
 # Scenarios forecast 
 ## Baseline: AI-Augmented Logistic 
 
