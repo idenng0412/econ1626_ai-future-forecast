@@ -10,8 +10,6 @@ This forecast argues that, as agentic systems mature and adoption scales beyond 
 
 # Capabilities 
 
-AI delivers genuine productivity gains across logistics, but those gains are captured unevenly. Predictive analytics concentrates advantage among data-rich firms, warehouse automation widens the productivity–wage gap, and AI coordination reshapes the geography of supply chains between advanced and developing economies.
-
 ## Predictive Analytics and Firm-Level Concentration
 
 AI enables predictive analytics by processing large volumes of real-time data into accurate forecasts, reducing the uncertainty that forces firms to hold costly safety stock and over-provision capacity. As forecasts tighten, firms run leaner inventories, suffer fewer stockouts, and increase vehicle and warehouse utilisation, which can lower logistics costs by 5 to 20 percent and inventory by 20 to 30 percent (Oca et al., 2024). Mechanically, these gains increase profit margins for firms and pass partly to consumers as lower prices, while dampening the bullwhip effect through improved allocative efficiency (Lee, Padmanabhan & Whang 1997). 
