@@ -19,7 +19,6 @@ Published with GitHub Pages: https://idenng0412.github.io/econ1626-ai-future-for
 | `main-chart.js` | Supporting JavaScript loaded by the essay. |
 | `README.md` | This file: project overview, navigation, publishing notes, and AI-tooling disclosure. |
 
-> Note: list every file your site actually loads. If you keep the hero video, add it here (and commit it to the repo) so the site does not depend on an external link.
 
 ## Essay structure
 
