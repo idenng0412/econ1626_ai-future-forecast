@@ -58,6 +58,14 @@
         .policy-para { margin-bottom: 36px; padding: 28px 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; border-left: 4px solid #5a67d8; }
         .policy-para h3 { font-size: 1.1rem; color: #1a202c; margin-bottom: 12px; }
         .policy-para p { color: #4a5568; line-height: 1.75; font-size: 1rem; margin: 0; }
+        /* Policy Interactive */
+        .policy-interactive { margin-bottom: 48px; }
+        .policy-toggles { display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap; }
+        .policy-btn { padding:9px 18px; border-radius:8px; border:2px solid #e2e8f0; background:#fff; color:#64748b; font-size:13px; font-weight:500; cursor:pointer; transition:background 0.18s,border-color 0.18s,color 0.18s; }
+        .policy-btn[data-p="0"].active { background:#5a67d8; border-color:#5a67d8; color:#fff; }
+        .policy-btn[data-p="1"].active { background:#3E7C5A; border-color:#3E7C5A; color:#fff; }
+        .policy-btn[data-p="2"].active { background:#d97706; border-color:#d97706; color:#fff; }
+        .policy-charts { display:flex; gap:32px; align-items:center; flex-wrap:wrap; }
 
         /* Scroll Indicator */
         .toc-indicator {
@@ -372,6 +380,18 @@
                 </table>
             </div>
 
+            <div class="policy-interactive">
+                <div class="policy-toggles">
+                    <button class="policy-btn active" data-p="0">1. Competition &amp; Data Access</button>
+                    <button class="policy-btn active" data-p="1">2. Workforce Transition</button>
+                    <button class="policy-btn active" data-p="2">3. Global Adjustment</button>
+                </div>
+                <div class="policy-charts">
+                    <div id="policy-radar" style="flex:1 1 280px;min-width:220px;"></div>
+                    <div id="policy-outcomes" style="flex:1 1 240px;min-width:200px;"></div>
+                </div>
+            </div>
+
             <div class="policy-para">
                 <h3>1. Competition and Data Access Policy</h3>
                 <p>Because AI performance relies on data scale, large firms can leverage this advantage to capture markets and raise barriers to entry, a self-reinforcing dynamic that tips the market toward winner-take-most. This policy therefore aims to restore contestability by treating data scale, rather than data itself, as the source of market power and mandating interoperability and portability. Because the advantages compound over time, regulators must act decisively before lock-in becomes entrenched and dominance is established, while calibrating rules so they do not deter the investment that drives the gains. Data-sharing mandates may also introduce privacy and intellectual-property concerns, so contestability rules must be paired with clear governance for data access and merger review.</p>
@@ -492,9 +512,11 @@
             // Small firms: captured efficiency lags and curves below as data scale rises (like "labour income")
             const smallLag = 0.96 - (s/100)*0.38;
             const smallExp = 1 + (s/100)*0.50;
+            // Enterprise starts at a higher baseline (0.20) and grows faster
+            const entBase = 0.20;
             for(let i=0;i<=10;i++){
                 const t=i/10;
-                const entH  = Math.min(t*entScale, 1.0);
+                const entH  = Math.min(entBase + t*entScale, 1.0);
                 const smallH = Math.max(0, Math.min(Math.pow(t,smallExp)*entScale*smallLag, 1.0));
                 ent.push([X(i),   h-pad-entH  *(h-pad*1.85)]);
                 small.push([X(i), h-pad-smallH*(h-pad*1.85)]);
@@ -510,8 +532,9 @@
                 `<path d="${lS}" fill="none" stroke="#e53e3e" stroke-width="2.6" stroke-dasharray="6 3"/>`+
                 `<text class="chart-axis" x="${ent[10][0]-6}"  y="${ent[10][1]-10}"  text-anchor="end" fill="#5a67d8">enterprise</text>`+
                 `<text class="chart-axis" x="${small[10][0]-6}" y="${small[10][1]+16}" text-anchor="end" fill="#e53e3e">small firms</text>`+
-                `<text class="chart-axis" x="${pad}" y="${h-14}">low</text>`+
-                `<text class="chart-axis" x="${wL-pad*0.5}" y="${h-14}" text-anchor="end">high — data scale</text>`+
+                `<text class="chart-axis" x="${pad}" y="${h-14}">2026</text>`+
+                `<text class="chart-axis" x="${wL-pad*0.5}" y="${h-14}" text-anchor="end">2030</text>`+
+                `<text class="chart-axis" x="${pad}" y="${pad-8}">efficiency ↑</text>`+
                 `</svg>`;
 
             // --- Right: Market capture pie chart ---
@@ -536,9 +559,6 @@
                 const lDist=b.share<0.12?r+20:r*0.62;
                 const [lx,ly]=polar(mid,lDist);
                 pieSvg+=`<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${b.color}" opacity="0.88"/>`;
-                if(pct>=4){
-                    pieSvg+=`<text class="chart-axis" x="${lx}" y="${ly}" text-anchor="middle" fill="${b.share<0.12?b.color:'#fff'}" font-weight="600" font-size="11">${pct}%</text>`;
-                }
                 angle=end;
             });
             // legend below pie
@@ -831,6 +851,108 @@
         }
         window.addEventListener('scroll',updateToc,{passive:true});
         updateToc();
+    })();
+
+    // Policy Interactive: Radar + Outcome Bars
+    (function(){
+        // Per-policy coverage effect on each axis [concentration, displacement, global]
+        const EFFECTS=[
+            [0.80, 0.15, 0.20],   // P1: Competition & Data Access
+            [0.10, 0.75, 0.10],   // P2: Workforce Transition
+            [0.15, 0.10, 0.78],   // P3: Global Adjustment
+        ];
+        // Baseline (no policy) and best-case (all policies) values
+        const BL={conc:78, disp:71, dev:22};
+        const IMP={conc:53, disp:45, dev:52};   // max improvement per metric
+
+        const active=new Set([0,1,2]);
+
+        function cov(){
+            return [0,1,2].map(ax=>Math.min(1,[...active].reduce((s,p)=>s+EFFECTS[p][ax],0)));
+        }
+
+        function renderPolicy(){
+            const c=cov();
+            const score=Math.round((c[0]+c[1]+c[2])/3*100);
+
+            // ---- Radar ----
+            const W=390,H=308,cx=194,cy=158,maxR=90;
+            const A=[-Math.PI/2, -Math.PI/2+2*Math.PI/3, -Math.PI/2+4*Math.PI/3];
+            function pt(v,i){return [cx+v*maxR*Math.cos(A[i]), cy+v*maxR*Math.sin(A[i])];}
+            function poly(vals){
+                return vals.map((v,i)=>{const[x,y]=pt(v,i);return(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);}).join(' ')+' Z';
+            }
+
+            let r=`<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;" preserveAspectRatio="xMidYMid meet">`;
+
+            // background rings
+            [1,.75,.5,.25].forEach(l=>{
+                r+=`<path d="${poly([l,l,l])}" fill="${l===1?'none':'#f8fafc'}" stroke="#e2e8f0" stroke-width="${l===1?1.5:.7}"/>`;
+            });
+            // axis lines with explicit label positions — avoids overflow at each tip
+            const axDefs=[
+                { lines:['Concentration','Mitigation'], lx:cx,                              ly:cy-maxR-24, anchor:'middle' },
+                { lines:['Displacement', 'Mitigation'], lx:cx+maxR*Math.cos(A[1])+10,      ly:cy+maxR*Math.sin(A[1])+6,  anchor:'start'  },
+                { lines:['Global',       'Integration'],lx:cx+maxR*Math.cos(A[2])-10,      ly:cy+maxR*Math.sin(A[2])+6,  anchor:'end'    },
+            ];
+            A.forEach((a,i)=>{
+                const[x,y]=pt(1,i);
+                r+=`<line x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="#cbd5e1" stroke-width="1"/>`;
+                const{lines,lx,ly,anchor}=axDefs[i];
+                lines.forEach((ln,li)=>{
+                    r+=`<text x="${lx.toFixed(1)}" y="${(ly+li*13).toFixed(1)}" text-anchor="${anchor}" font-size="10" fill="#64748b" font-family="inherit">${ln}</text>`;
+                });
+            });
+            // data polygon
+            r+=`<path d="${poly(c)}" fill="#5a67d8" fill-opacity="0.15" stroke="#5a67d8" stroke-width="2.2"/>`;
+            // dots
+            c.forEach((v,i)=>{const[x,y]=pt(v,i);r+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="#5a67d8"/>`;});
+            // centre score
+            r+=`<text x="${cx}" y="${cy+8}" text-anchor="middle" font-size="22" font-weight="700" fill="#1a202c" font-family="inherit">${score}%</text>`;
+            r+=`<text x="${cx}" y="${cy+23}" text-anchor="middle" font-size="9" fill="#94a3b8" letter-spacing=".06em" font-family="inherit">RESILIENCE</text>`;
+            r+=`</svg>`;
+            document.getElementById('policy-radar').innerHTML=r;
+
+            // ---- Outcome bars ----
+            const conc=Math.round(BL.conc-c[0]*IMP.conc);
+            const disp=Math.round(BL.disp-c[1]*IMP.disp);
+            const dev =Math.round(BL.dev +c[2]*IMP.dev);
+
+            function bar(label,value,baseline,best,invert){
+                const goodness=invert?(baseline-value)/(baseline-best):(value-baseline)/(best-baseline);
+                const col=`hsl(${Math.round(Math.max(0,Math.min(1,goodness))*120)},58%,44%)`;
+                const fillPct=invert?(value/baseline*100):(value/best*100);
+                return `<div style="margin-bottom:22px;">
+                    <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+                        <span style="font-size:11px;color:#64748b;">${label}</span>
+                        <span style="font-size:13px;font-weight:700;color:${col};">${value}%</span>
+                    </div>
+                    <div style="background:#f1f5f9;border-radius:5px;height:13px;overflow:hidden;">
+                        <div style="width:${fillPct.toFixed(1)}%;height:100%;background:${col};border-radius:5px;transition:width .35s,background .35s;"></div>
+                    </div>
+                </div>`;
+            }
+
+            document.getElementById('policy-outcomes').innerHTML=
+                `<div style="padding:0 0 0 8px;">
+                <p style="font-size:11px;font-weight:600;color:#1a202c;letter-spacing:.06em;text-transform:uppercase;margin:0 0 20px;">Estimated Outcomes</p>`+
+                bar('Concentration Risk',  conc, BL.conc, BL.conc-IMP.conc, true)+
+                bar('Displacement Rate',   disp, BL.disp, BL.disp-IMP.disp, true)+
+                bar('Developing Economy Inclusion', dev, BL.dev, BL.dev+IMP.dev, false)+
+                `<p style="font-size:10px;color:#94a3b8;margin:6px 0 0;">Toggle policies above to see combined effect.</p>
+                </div>`;
+        }
+
+        document.querySelectorAll('.policy-btn').forEach(btn=>{
+            btn.addEventListener('click',function(){
+                const p=parseInt(this.dataset.p);
+                if(active.has(p)) active.delete(p); else active.add(p);
+                this.classList.toggle('active');
+                renderPolicy();
+            });
+        });
+
+        renderPolicy();
     })();
     </script>
 </body>
