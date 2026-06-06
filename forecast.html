@@ -30,6 +30,99 @@
         .sim-bar .sim-track { height: 10px; background: #2d3748; border-radius: 6px; overflow: hidden; }
         .sim-bar .sim-fill { height: 100%; border-radius: 6px; transition: width .5s cubic-bezier(.2,.7,.2,1), background .4s; }
         .sim-note { font-family: monospace; font-size: 11px; color: #718096; margin-top: 12px; }
+
+        /* Policy Table */
+        .policy-table-wrap { overflow-x: auto; margin-bottom: 48px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .policy-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+        .policy-table thead tr { background: #2d3748; }
+        .policy-table th { padding: 13px 16px; text-align: left; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: #e2e8f0; font-weight: 600; white-space: nowrap; }
+        .policy-table td { padding: 15px 16px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: #4a5568; line-height: 1.5; }
+        .policy-table tbody tr:last-child td { border-bottom: none; }
+        .policy-table tbody tr:nth-child(odd) { background: #f8faff; }
+        .policy-table tbody tr:nth-child(even) { background: #fff; }
+        .policy-table td:first-child { color: #1a202c; font-weight: 600; font-size: 13px; min-width: 170px; }
+        .policy-para { margin-bottom: 36px; padding: 28px 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; border-left: 4px solid #5a67d8; }
+        .policy-para h3 { font-size: 1.1rem; color: #1a202c; margin-bottom: 12px; }
+        .policy-para p { color: #4a5568; line-height: 1.75; font-size: 1rem; margin: 0; }
+
+        /* Scroll Indicator */
+        .toc-indicator {
+            position: fixed;
+            left: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 4px 0;
+        }
+        .toc-line {
+            position: absolute;
+            left: 5px;
+            top: 16px;
+            bottom: 16px;
+            width: 1px;
+            background: #d1d5db;
+            z-index: 0;
+        }
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 0;
+            text-decoration: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        .toc-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #c4cad4;
+            flex-shrink: 0;
+            transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .toc-item.active .toc-dot {
+            background: #5a67d8;
+            border-color: #5a67d8;
+            transform: scale(1.25);
+            box-shadow: 0 0 0 3px rgba(90,103,216,0.18);
+        }
+        .toc-item:hover .toc-dot {
+            border-color: #5a67d8;
+        }
+        .toc-label {
+            font-size: 10.5px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #a0aec0;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+            pointer-events: none;
+            font-family: 'Segoe UI', 'Helvetica Neue', Roboto, sans-serif;
+        }
+        .toc-indicator:hover .toc-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .toc-item.active .toc-label {
+            opacity: 1;
+            transform: translateX(0);
+            color: #5a67d8;
+            font-weight: 600;
+        }
+        .toc-item:hover .toc-label {
+            color: #4a5568;
+        }
+        @media (max-width: 1100px) {
+            .toc-indicator { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -39,6 +132,7 @@
             <ul class="nav-menu">
                 <li><a href="#thesis">Thesis</a></li>
                 <li><a href="#capabilities">Capabilities</a></li>
+                <li><a href="#simulator">Simulator</a></li>
                 <li><a href="#scenarios">Scenarios</a></li>
                 <li><a href="#policy">Policy</a></li>
                 <li class="nav-button"><a href="#about">About</a></li>
@@ -117,7 +211,7 @@
             <h2>Three Scenarios for 2030</h2>
 
             <!-- Simulator -->
-            <div class="sim-section">
+            <div class="sim-section" id="simulator">
                 <h3>Scenario Simulator</h3>
                 <div class="sim-sub">// move the dials — three drivers → four outcomes → one trajectory</div>
                 <div class="sim-grid">
@@ -192,37 +286,63 @@
         <div class="content-container">
             <h2>Policy Playbook</h2>
             <p style="margin-bottom: 40px; font-size: 1.1rem; color: #4a5568;">Three strategic policy levers to shape the distribution of AI gains in logistics:</p>
-            <div class="policy-card">
+            <div class="policy-table-wrap">
+                <table class="policy-table">
+                    <thead>
+                        <tr>
+                            <th>Policy Option</th>
+                            <th>Responsibilities</th>
+                            <th>When</th>
+                            <th>Limitation</th>
+                            <th>Mitigation</th>
+                            <th>KPIs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. Competition and Data Access Policy</td>
+                            <td>ACCC, European Commission, data-protection authorities, governments, major platforms</td>
+                            <td>Early / pre-emptive, before data lock-in becomes entrenched</td>
+                            <td>Overregulation may deter innovation while data-sharing mandates may raise privacy and IP concerns</td>
+                            <td>Targeted contestability rules, interoperability standards, fair cloud access, paired with clear data governance and merger review</td>
+                            <td>Top-firm share of logistics AI capacity; SME adoption rate; concentration indicators</td>
+                        </tr>
+                        <tr>
+                            <td>2. Workforce Transition and Reskilling Programmes</td>
+                            <td>Governments, Department of Employment, TAFE, universities, firms, unions</td>
+                            <td>Before and during automation rollout</td>
+                            <td>Training alone unable to address productivity-wage gaps as labour’s bargaining power weakens</td>
+                            <td>Sector-specific training programs paired with wage insurance and labour protection</td>
+                            <td>Reabsorption rate; share of displaced workers re-employed within 12 months; wage recovery after transition</td>
+                        </tr>
+                        <tr>
+                            <td>3. Global Adjustment and Inclusive Supply Chains</td>
+                            <td>WTO, UNCTAD, World Bank, development-finance institutions, governments</td>
+                            <td>Early and long-term, before global divergence becomes entrenched</td>
+                            <td>Advanced economies have weak incentives to support developing economies as competitors</td>
+                            <td>International fair-trade framework paired with joint cross-border initiatives</td>
+                            <td>Developing economies’ share of value-added in AI-enabled supply chains; digital infrastructure access; supplier AI adoption rate</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="policy-para">
                 <h3>1. Competition and Data Access Policy</h3>
-                <p><strong>Responsibility:</strong> ACCC, European Commission, data-protection authorities, governments, major platforms</p>
-                <p><strong>When:</strong> Early / pre-emptive, before data lock-in becomes entrenched</p>
-                <p><strong>Limitation:</strong> Overregulation may deter innovation while data-sharing mandates may raise privacy and IP concerns </p>
-                <p><strong>Mitigation:</strong> Targeted contestability rules, interoperability standards, fair cloud access, paired with clear data governance and merger review </p>
-                <p><strong>KPIs:</strong> Top-firm share of logistics AI capacity; SME adoption rate; concentration indicators</p>
-                <p>Because AI performance relies on data scale, large firms can leverage this advantage to capture markets and raise barriers to entry, a self-reinforcing dynamic that tips the market toward winner-take-most. This policy therefore aims to restore contestability by treating data scale, rather than data itself, as the source of market power and mandating interoperability and portability. Because the advantages compound over time, regulators must act decisively before lock-in becomes entrenched and dominance is established, while calibrating rules so they do not deter the investment that drives the gains. Data-sharing mandates may also introduce privacy and intellectual-property concerns, so contestability rules must be paired with clear governance for data access and merger review. </p>
+                <p>Because AI performance relies on data scale, large firms can leverage this advantage to capture markets and raise barriers to entry, a self-reinforcing dynamic that tips the market toward winner-take-most. This policy therefore aims to restore contestability by treating data scale, rather than data itself, as the source of market power and mandating interoperability and portability. Because the advantages compound over time, regulators must act decisively before lock-in becomes entrenched and dominance is established, while calibrating rules so they do not deter the investment that drives the gains. Data-sharing mandates may also introduce privacy and intellectual-property concerns, so contestability rules must be paired with clear governance for data access and merger review.</p>
             </div>
-            <div class="policy-card">
+            <div class="policy-para">
                 <h3>2. Workforce Transition and Reskilling Programmes</h3>
-                <p><strong>Responsibility:</strong> Governments, Department of Employment, TAFE, universities, firms, unions</p>
-                <p><strong>When:</strong> Before and during automation rollout</p>
-                <p><strong>Limitation:</strong> Training alone unable to address productivity-wage gaps as labour’s bargaining power weakens</p>
-                <p><strong>Mitigation:</strong> Sector-specific training programs paired with wage insurance and labour protection</p>
-                <p><strong>KPIs:</strong> Reabsorption rate; share of displaced workers re-employed within 12 months; wage recovery after transition</p>
-                <p>As companies continue to adopt AI-enabled automation systems to raise productivity, workers will continue to be displaced if their expertise is unable to meet the shifts in labour demand. Therefore, this policy manages displacement through transition rather than resisting it, with sector-specific reskilling linked to real roles in robotics maintenance, data analytics, and logistics coordination, turning displacement into movement towards higher-value work. Its limit is that reskilling alone cannot close the productivity–wage gap, because automation erodes workers' bargaining power even where retraining succeeds, so it must be paired with wage insurance and labour protection and put in place before displacement accelerates.</p>
+                <p>As companies continue to adopt AI-enabled automation systems to raise productivity, workers will continue to be displaced if their expertise is unable to meet the shifts in labour demand. Therefore, this policy manages displacement through transition rather than resisting it, with sector-specific reskilling linked to real roles in robotics maintenance, data analytics, and logistics coordination, turning displacement into movement towards higher-value work. Its limit is that reskilling alone cannot close the productivity–wage gap, because automation erodes workers’ bargaining power even where retraining succeeds, so it must be paired with wage insurance and labour protection and put in place before displacement accelerates.</p>
             </div>
-            <div class="policy-card">
+            <div class="policy-para">
                 <h3>3. Global Adjustment and Inclusive Supply Chains</h3>
-                <p><strong>Responsibility:</strong> WTO, UNCTAD, World Bank, development-finance institutions, governments</p>
-                <p><strong>When:</strong> Early and long-term, before global divergence becomes entrenched</p>
-                <p><strong>Limitation:</strong> Advanced economies have weak incentives to support developing economies as competitors</p>
-                <p><strong>Mitigation:</strong> International fair-trade framework paired with joint cross-border initiatives </p>
-                <p><strong>KPIs:</strong> Developing economies’ share of value-added in AI-enabled supply chains; digital infrastructure access; supplier AI adoption rate</p>
                 <p>As competitiveness shifts from cheap labour towards data and capital, developing economies that relied on labour-cost arbitrage face exclusion rather than mere adjustment, and left without access to the underlying capabilities that become a self-reinforcing gap. This lever uses an international policy approach to encourage technology transfer, development finance, and enabling trade rules to help these economies move up the value chain instead of being locked out. The structural obstacle is that advanced economies have weak incentives to assist future competitors. The answer is mutual benefit: as developing economies move into higher-value activities, advanced economies gain more resilient supplier networks and reduced geopolitical supply-chain risk, which is why co-funded infrastructure and supplier-upgrading partnerships can succeed.</p>
             </div>
         </div>
     </section>
 
-    <section class="content-section">
+    <section class="content-section" id="methods">
         <div class="content-container">
             <h2>Methods & Limitations</h2>
             <div class="methods-box">
@@ -238,7 +358,7 @@
         </div>
     </section>
     
-            <section class="content-section">
+            <section class="content-section" id="conclusion">
         <div class="content-container">
             <h2>Conclusion</h2>
             <div class="thesis-box">
@@ -247,7 +367,7 @@
         </div>
     </section>
     
-    <section class="content-section">
+    <section class="content-section" id="references">
         <div class="content-container">
             <h2>References</h2>
             <div class="thesis-box">
@@ -260,7 +380,7 @@
                 <p>Oca A, Panikkar R, Sampat C and Brown T (2024) 'Harnessing the power of AI in distribution operations,' McKinsey & Company, accessed 1 June 2026. https://www.mckinsey.com/industries/industrials/our-insights/distribution-blog/harnessing-the-power-of-ai-in-distribution-operations</p>
                 <p>Singla A, Sukharevsky A, Yee L, Chui M, Hall B and Balakrishma T (2024) The State of AI in 2025 Agents, innovation, and Transformation. McKinsey and Company, accessed 1 June 2026.  https://www.mckinsey.com/~/media/mckinsey/business%20functions/quantumblack/our%20insights/the%20state%20of%20ai/november%202025/the-state-of-ai-2025-agents-innovation_cmyk-v1.pdf</p>
                 <p>Weise K and Kask E (2025) 'Amazon plans to replace more than half a million jobs with robots', The New York Times, accessed 1 June 2026. https://www.nytimes.com/2025/10/21/technology/inside-amazons-plans-to-replace-workers-with-robots.html.</p>
-                <p>Williamson O (1985). The economic institutions of capitalism : firms, markets, relational contracting. Free Press.</p>
+                <p>Williamson O (1985) The economic institutions of capitalism : firms, markets, relational contracting. Free Press.</p>
                 <p>World Economic Forum (2025) Future of Jobs Report 2025, World Economic Forum, accessed 1 June 2026. https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf</p>
             </div>
         </div>
@@ -272,6 +392,39 @@
             <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">Generative AI tools were used to support structure, coding, revising, and visual design. The final argument, evidence selection, and policy judgement were reviewed and edited by the author.</p>
         </div>
     </footer>
+
+    <!-- Scroll Indicator -->
+    <nav class="toc-indicator" aria-label="Page sections">
+        <div class="toc-line"></div>
+        <a class="toc-item" href="#thesis" data-target="thesis">
+            <div class="toc-dot"></div>
+            <span class="toc-label">Thesis</span>
+        </a>
+        <a class="toc-item" href="#capabilities" data-target="capabilities">
+            <div class="toc-dot"></div>
+            <span class="toc-label">Capabilities</span>
+        </a>
+        <a class="toc-item" href="#scenarios" data-target="scenarios">
+            <div class="toc-dot"></div>
+            <span class="toc-label">Scenarios</span>
+        </a>
+        <a class="toc-item" href="#policy" data-target="policy">
+            <div class="toc-dot"></div>
+            <span class="toc-label">Policy</span>
+        </a>
+        <a class="toc-item" href="#methods" data-target="methods">
+            <div class="toc-dot"></div>
+            <span class="toc-label">Methods</span>
+        </a>
+        <a class="toc-item" href="#conclusion" data-target="conclusion">
+            <div class="toc-dot"></div>
+            <span class="toc-label">Conclusion</span>
+        </a>
+        <a class="toc-item" href="#references" data-target="references">
+            <div class="toc-dot"></div>
+            <span class="toc-label">References</span>
+        </a>
+    </nav>
 
     <script src="main-chart.js"></script>
     <script>
@@ -346,6 +499,8 @@
 
     /* ---- Simulator ---- */
     const S={diff:50,reab:50,pol:50};
+    let currentScenario=0;
+    let isAnimating=false;
     function clamp(x){return Math.max(0,Math.min(100,x));}
     function compute(){
         const {diff,reab,pol}=S;
@@ -362,9 +517,20 @@
         if(avg<=38) return ['Downside ↓','Concentrated diffusion and absent policy push every channel to its extreme; gains are large but captured by a few.','#dc2626'];
         return ['Baseline →','Capability races ahead while diffusion lags; gains are real but unevenly shared, and policy stays reactive.','#5a67d8'];
     }
+    function getScenarioIndex(){
+        const avg=(S.diff+S.reab+S.pol)/3;
+        if(avg>=66) return 1;
+        if(avg<=38) return 2;
+        return 0;
+    }
     function colorFor(key,val){
         if(key==='conc') return val>60?'#e53e3e':val>40?'#d69e2e':'#38a169';
         return val>60?'#38a169':val>40?'#d69e2e':'#e53e3e';
+    }
+    function showScenarioPanel(s){
+        document.querySelectorAll('.scenario').forEach(el=>el.style.display='none');
+        document.getElementById(`scenario-${s}`).style.display='block';
+        document.querySelectorAll('.scenario-btn').forEach((btn,idx)=>btn.classList.toggle('active',idx===s));
     }
     function renderSim(){
         document.getElementById('v-diff').textContent=S.diff;
@@ -382,6 +548,13 @@
         const b=document.getElementById('sim-badge');
         b.textContent=name; b.style.color=col;
         document.getElementById('sim-desc').textContent=desc;
+        if(!isAnimating){
+            const newIdx=getScenarioIndex();
+            if(newIdx!==currentScenario){
+                currentScenario=newIdx;
+                showScenarioPanel(newIdx);
+            }
+        }
     }
     ['diff','reab','pol'].forEach(k=>{
         document.getElementById('s-'+k).addEventListener('input',function(){S[k]=parseInt(this.value);renderSim();});
@@ -390,10 +563,33 @@
 
     /* ---- Page functions ---- */
     function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}
+    const SCENARIO_PRESETS=[
+        {diff:50,reab:50,pol:50},   // Baseline
+        {diff:80,reab:75,pol:80},   // Upside
+        {diff:20,reab:18,pol:15}    // Downside
+    ];
+    function animateSliders(target,duration){
+        isAnimating=true;
+        const start={diff:S.diff,reab:S.reab,pol:S.pol};
+        const t0=performance.now();
+        function step(now){
+            const p=Math.min(1,(now-t0)/duration);
+            const ease=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+            ['diff','reab','pol'].forEach(k=>{
+                const val=Math.round(start[k]+(target[k]-start[k])*ease);
+                S[k]=val;
+                document.getElementById('s-'+k).value=val;
+            });
+            renderSim();
+            if(p<1) requestAnimationFrame(step);
+            else isAnimating=false;
+        }
+        requestAnimationFrame(step);
+    }
     function switchScenario(s){
-        document.querySelectorAll('.scenario').forEach(el=>el.style.display='none');
-        document.getElementById(`scenario-${s}`).style.display='block';
-        document.querySelectorAll('.scenario-btn').forEach((btn,idx)=>btn.classList.toggle('active',idx===s));
+        currentScenario=s;
+        showScenarioPanel(s);
+        animateSliders(SCENARIO_PRESETS[s],600);
     }
     function switchTimeline(phase){
         document.querySelectorAll('.timeline-phase').forEach(el=>el.style.display='none');
@@ -402,6 +598,25 @@
     }
     function updateMainChart(phase){console.log('Timeline switched to phase:',phase);}
     window.addEventListener('load',()=>{console.log('Page loaded');});
+
+    /* ---- Scroll Indicator ---- */
+    (function(){
+        const sectionIds=['thesis','capabilities','scenarios','policy','methods','conclusion','references'];
+        const tocItems=document.querySelectorAll('.toc-item');
+        function updateToc(){
+            const scrollMid=window.scrollY+window.innerHeight*0.35;
+            let active=sectionIds[0];
+            sectionIds.forEach(function(id){
+                const el=document.getElementById(id);
+                if(el&&el.getBoundingClientRect().top+window.scrollY<=scrollMid) active=id;
+            });
+            tocItems.forEach(function(item){
+                item.classList.toggle('active',item.dataset.target===active);
+            });
+        }
+        window.addEventListener('scroll',updateToc,{passive:true});
+        updateToc();
+    })();
     </script>
 </body>
 </html>
