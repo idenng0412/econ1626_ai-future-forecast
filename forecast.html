@@ -191,8 +191,15 @@
                 <p>AI enables predictive analytics by processing large volumes of real-time data into accurate forecasts, reducing the uncertainty that forces firms to hold costly safety stock and over-provision capacity. As forecasts tighten, firms run leaner inventories, suffer fewer stockouts, and increase vehicle and warehouse utilisation, which can lower logistics costs by 5 to 20 percent and inventory by 20 to 30 percent (Oca et al. 2024). Mechanically, these gains widen margins and pass partly to consumers as lower prices, while dampening the bullwhip effect through improved allocative efficiency (Lee, Padmanabhan & Whang 1997).</p>
                 <p>However, forecasting accuracy depends on data scale, where firms with the largest datasets can train the better models and win more business, creating a self-reinforcing flywheel (Jones & Tonetti 2020). As agentic systems become deeply involved in planning and execution across the chain by 2030, this process intensifies the divergence at the firm level, where value gains concentrate among hyperscalers and established firms while smaller ones struggle to keep pace (Singla et al. 2025).</p>
                 <figure class="chart-figure">
-                    <div id="chart-flywheel"></div>
-                    <figcaption>Fig. 1 — The data flywheel (illustrative). As data scale grows, model quality and market share rise together, so the share captured by the largest firms climbs steeply rather than linearly.</figcaption>
+                    <div class="fig2-controls">
+                        <div class="fig2-dial">
+                            <label class="fig2-label">Data Scale <span id="fig1-v-scale">0</span></label>
+                            <input type="range" id="fig1-scale" min="0" max="100" value="0">
+                            <div class="fig2-ends"><span>minimal</span><span>massive</span></div>
+                        </div>
+                    </div>
+                    <div id="chart-flywheel" style="display:flex;gap:12px;align-items:flex-start;"></div>
+                    <figcaption>Fig. 1 — Firm efficiency and market capture (illustrative). As data scale grows, large firms and hyperscalers pull away from smaller ones; the efficiency gap widens and their market share climbs steeply.</figcaption>
                 </figure>
             </div>
 
@@ -469,26 +476,94 @@
     /* ---- SVG Charts ---- */
     function svgOpen(w,h){return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">`;}
 
-    // Fig 1: Data Flywheel
+    // Fig 1: Firm Efficiency & Market Capture (interactive)
     (function(){
-        const w=720,h=280,pad=46;
-        let pts=[];
-        for(let i=0;i<=100;i++){
-            const x=pad+(i/100)*(w-pad*1.4);
-            const y=h-pad-(Math.pow(i/100,2.1))*(h-pad*1.8);
-            pts.push([x,y]);
+        const wL=440, wR=240, h=280, pad=46;
+
+        // Market capture shares (must sum to 1)
+        function shareSmall(s)      { return 0.62 - (s/100)*0.50; }
+        function shareEnterprise(s) { return 0.38 + (s/100)*0.50; }
+
+        function renderFig1(s){
+            const X=i=>pad+(i/10)*(wL-pad*1.6);
+            const ent=[], small=[];
+            // Enterprise: linear lift that grows with data scale (like "output per worker" in Fig 2)
+            const entScale = 0.55 + (s/100)*0.30;
+            // Small firms: captured efficiency lags and curves below as data scale rises (like "labour income")
+            const smallLag = 0.96 - (s/100)*0.38;
+            const smallExp = 1 + (s/100)*0.50;
+            for(let i=0;i<=10;i++){
+                const t=i/10;
+                const entH  = Math.min(t*entScale, 1.0);
+                const smallH = Math.max(0, Math.min(Math.pow(t,smallExp)*entScale*smallLag, 1.0));
+                ent.push([X(i),   h-pad-entH  *(h-pad*1.85)]);
+                small.push([X(i), h-pad-smallH*(h-pad*1.85)]);
+            }
+            const lE=ent.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+            const lS=small.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
+            let grid='';
+            for(let g=0;g<=4;g++){const y=h-pad-(g/4)*(h-pad*1.9);grid+=`<line class="chart-gridline" x1="${pad}" y1="${y.toFixed(1)}" x2="${wL-pad*0.5}" y2="${y.toFixed(1)}"/>`;}
+
+            const svgL=`<svg viewBox="0 0 ${wL} ${h}" style="flex:1 1 ${wL}px;min-width:0;" preserveAspectRatio="xMidYMid meet">`+
+                grid+
+                `<path d="${lE}" fill="none" stroke="#5a67d8" stroke-width="2.6"/>`+
+                `<path d="${lS}" fill="none" stroke="#e53e3e" stroke-width="2.6" stroke-dasharray="6 3"/>`+
+                `<text class="chart-axis" x="${ent[10][0]-6}"  y="${ent[10][1]-10}"  text-anchor="end" fill="#5a67d8">enterprise</text>`+
+                `<text class="chart-axis" x="${small[10][0]-6}" y="${small[10][1]+16}" text-anchor="end" fill="#e53e3e">small firms</text>`+
+                `<text class="chart-axis" x="${pad}" y="${h-14}">low</text>`+
+                `<text class="chart-axis" x="${wL-pad*0.5}" y="${h-14}" text-anchor="end">high — data scale</text>`+
+                `</svg>`;
+
+            // --- Right: Market capture pie chart ---
+            const slices=[
+                {label:'Small firms', color:'#94a3b8', share:shareSmall(s)},
+                {label:'Enterprise',  color:'#5a67d8', share:shareEnterprise(s)},
+            ];
+            const cx=wR/2, cy=h/2-10, r=76;
+            function polar(angle,radius){
+                return [(cx+radius*Math.cos(angle)).toFixed(2),(cy+radius*Math.sin(angle)).toFixed(2)];
+            }
+            let pieSvg='', angle=-Math.PI/2;
+            slices.forEach(b=>{
+                const sweep=b.share*2*Math.PI;
+                const end=angle+sweep;
+                const [x1,y1]=polar(angle,r);
+                const [x2,y2]=polar(end,r);
+                const large=sweep>Math.PI?1:0;
+                const pct=Math.round(b.share*100);
+                // label position at midpoint of arc
+                const mid=angle+sweep/2;
+                const lDist=b.share<0.12?r+20:r*0.62;
+                const [lx,ly]=polar(mid,lDist);
+                pieSvg+=`<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z" fill="${b.color}" opacity="0.88"/>`;
+                if(pct>=4){
+                    pieSvg+=`<text class="chart-axis" x="${lx}" y="${ly}" text-anchor="middle" fill="${b.share<0.12?b.color:'#fff'}" font-weight="600" font-size="11">${pct}%</text>`;
+                }
+                angle=end;
+            });
+            // legend below pie
+            let legend='';
+            slices.forEach((b,i)=>{
+                const lx=8, ly=h-28+i*0;
+                const row=h-38+i*14;
+                legend+=`<rect x="${lx}" y="${row-8}" width="10" height="10" rx="2" fill="${b.color}"/>`;
+                legend+=`<text class="chart-axis" x="${lx+14}" y="${row}" fill="#4a5568">${b.label} — ${Math.round(b.share*100)}%</text>`;
+            });
+
+            const svgR=`<svg viewBox="0 0 ${wR} ${h}" style="flex:0 0 ${wR}px;width:${wR}px;" preserveAspectRatio="xMidYMid meet">`+
+                pieSvg+legend+
+                `<text class="chart-axis" x="${cx}" y="${pad-20}" text-anchor="middle">market capture</text>`+
+                `</svg>`;
+
+            document.getElementById('chart-flywheel').innerHTML=svgL+svgR;
         }
-        const line=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
-        const area=line+` L ${pts[pts.length-1][0].toFixed(1)} ${h-pad} L ${pad} ${h-pad} Z`;
-        let grid='';
-        for(let g=0;g<=4;g++){const y=h-pad-(g/4)*(h-pad*1.8);grid+=`<line class="chart-gridline" x1="${pad}" y1="${y.toFixed(1)}" x2="${w-pad*0.4}" y2="${y.toFixed(1)}"/>`;}
-        document.getElementById('chart-flywheel').innerHTML=svgOpen(w,h)+grid+
-            `<path d="${area}" fill="#5a67d8" opacity="0.12"/>`+
-            `<path d="${line}" fill="none" stroke="#5a67d8" stroke-width="2.5"/>`+
-            `<text class="chart-axis" x="${pad}" y="${h-14}">low</text>`+
-            `<text class="chart-axis" x="${w-pad*0.4}" y="${h-14}" text-anchor="end">high — data scale</text>`+
-            `<text class="chart-axis" x="${pad}" y="${pad-8}">market share of top firms ↑</text>`+
-            `</svg>`;
+
+        renderFig1(0);
+        document.getElementById('fig1-scale').addEventListener('input',function(){
+            const v=parseInt(this.value);
+            document.getElementById('fig1-v-scale').textContent=v;
+            renderFig1(v);
+        });
     })();
 
     // Fig 2: Productivity-Wage Gap (interactive)
