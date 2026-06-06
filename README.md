@@ -16,7 +16,10 @@ https://idenng0412.github.io/econ1626-ai-future-forecast/
 
 | File | Description |
 | --- | --- |
-| `forecast.html` | The complete interactive web essay. Open this file in a browser to view the project locally. It is self-contained, with inline CSS, charts, and JavaScript. |
+| `forecast.html` | The main interactive web essay. Open this file in a browser to view the project locally. |
+| `styles.css` | External stylesheet for layout, typography, and component styling used by `forecast.html`. |
+| `main-chart.js` | External JavaScript file loaded by `forecast.html` for supplementary chart animation logic. |
+| `index.html` | Redirect shim (`<meta http-equiv="refresh">`) that forwards GitHub Pages visitors to `forecast.html`. |
 | `README.md` | Project overview, repository guide, publishing notes, and AI-tooling disclosure. |
 
 ## Essay Structure
@@ -28,7 +31,7 @@ https://idenng0412.github.io/econ1626-ai-future-forecast/
    - AI coordination and the geography of trade.
 3. **Interactive Scenario Simulator** — uses three sliders to model diffusion, worker reabsorption, and policy strength. The simulator updates four outcome metrics and classifies the pathway as baseline, upside, or downside.
 4. **Scenario Forecasts** — develops baseline, upside, and downside futures for global logistics by 2030.
-5. **Policy Playbook** — summarises three policy levers and explains their economic rationale.
+5. **Policy Playbook** — presents three policy levers in a summary table, then lets readers toggle each policy on and off to see how the combination affects a radar chart (concentration mitigation, displacement mitigation, global integration) and three live outcome indicators (concentration risk, displacement rate, developing economy inclusion).
 6. **Methods, Data and Limitations** — outlines sources, assumptions, uncertainty, and AI-tooling disclosure.
 7. **Conclusion and References** — summarises the forecast and provides source attribution.
 
@@ -36,7 +39,10 @@ https://idenng0412.github.io/econ1626-ai-future-forecast/
 
 - **Scenario simulator:** built with vanilla JavaScript. Users can adjust diffusion, worker reabsorption, and policy strength to see how outcomes change.
 - **Live outcome metrics:** productivity, market concentration, labour income share, and developing-economy participation update dynamically.
-- **SVG visuals:** three hand-coded charts illustrate the data flywheel, productivity–wage decoupling, and reshoring trend. These visuals are schematic and labelled as illustrative.
+- **Fig. 1 — Firm efficiency and market capture:** interactive SVG with a Data Scale slider. Two diverging curves show enterprise and small-firm efficiency over 2026–2030; a live pie chart shows how market capture shifts as data scale grows.
+- **Fig. 2 — Productivity–wage decoupling:** interactive SVG with Warehouse Automation and Labour Displacement sliders that reshape the output-per-worker and labour-income curves in real time.
+- **Fig. 3 — Reshoring and global supply chain geography:** a canvas-based pixel world map (90 × 45 grid, 4° per cell). A Logistics Optimisation slider progressively highlights developing economies in red — starting from the weakest economies and ending with the largest — as rising efficiency reduces their labour-cost advantage.
+- **Policy radar and outcome bars:** three toggle buttons (one per policy lever) update a spider chart showing combined policy coverage across three axes, alongside live outcome bars for concentration risk, displacement rate, and developing economy inclusion.
 - **Scroll-reveal animation:** sections appear dynamically as the reader moves through the essay.
 - **Sticky navigation:** allows readers to move easily between major sections.
 
