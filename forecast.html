@@ -31,6 +31,14 @@
         .sim-bar .sim-fill { height: 100%; border-radius: 6px; transition: width .5s cubic-bezier(.2,.7,.2,1), background .4s; }
         .sim-note { font-family: monospace; font-size: 11px; color: #718096; margin-top: 12px; }
 
+        /* Interactive Fig 2 */
+        .fig2-controls { display: flex; gap: 32px; margin-bottom: 20px; padding: 18px 22px; background: #1a202c; border-radius: 8px; }
+        .fig2-dial { flex: 1; }
+        .fig2-label { display: flex; justify-content: space-between; font-family: monospace; font-size: 11.5px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; color: #e2e8f0; }
+        .fig2-label span { color: #fc8181; font-weight: 700; }
+        .fig2-ends { display: flex; justify-content: space-between; font-family: monospace; font-size: 10px; color: #718096; margin-top: 6px; }
+        @media(max-width:600px){ .fig2-controls { flex-direction: column; gap: 16px; } }
+
         /* Policy Table */
         .policy-table-wrap { overflow-x: auto; margin-bottom: 48px; border-radius: 10px; border: 1px solid #e2e8f0; }
         .policy-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
@@ -188,8 +196,20 @@
                 <p>However, these gains accrue mainly to firms. For example, Amazon expects to automate up to 75 percent of its operations by 2033, while routine occupations in warehousing and logistics are left with increasing automation pressure (Weise and Kask 2025). Although automation creates new job opportunities, it displaces workers from existing tasks faster than new tasks are reinstated, while the reinstated positions are concentrated in maintenance and engineering, which demand higher technical expertise than the jobs being displaced (Acemoglu and Restrepo 2019). AI therefore complements higher-skilled workers while substituting for routine ones.</p>
                 <p>As machines handle routine tasks more efficiently and firms become less dependent on routine labour, productivity gains may fail to translate into higher wages and can weaken workers' bargaining power. Consequently, labour's share of income may decline despite rising output per worker, as firms retain a larger proportion of the gains as profit rather than distributing them through higher wages. As automation spreads towards 2030, this productivity–wage gap is likely to widen, with the benefits of automation accruing disproportionately to capital owners and higher-skilled workers.</p>
                 <figure class="chart-figure">
+                    <div class="fig2-controls">
+                        <div class="fig2-dial">
+                            <label class="fig2-label">Warehouse Automation <span id="fig2-v-auto">50</span></label>
+                            <input type="range" id="fig2-auto" min="0" max="100" value="50">
+                            <div class="fig2-ends"><span>minimal</span><span>high</span></div>
+                        </div>
+                        <div class="fig2-dial">
+                            <label class="fig2-label">Labour Displacement <span id="fig2-v-disp">50</span></label>
+                            <input type="range" id="fig2-disp" min="0" max="100" value="50">
+                            <div class="fig2-ends"><span>low</span><span>severe</span></div>
+                        </div>
+                    </div>
                     <div id="chart-gap"></div>
-                    <figcaption>Fig. 2 — The productivity–wage decoupling (illustrative). Output per worker keeps rising while labour's share of income flattens and falls, as automation weakens the link between productivity and pay.</figcaption>
+                    <figcaption>Fig. 2 — The productivity–wage decoupling (illustrative). Drag the sliders to simulate how warehouse automation raises output per worker and how labour displacement widens the gap with labour's income share.</figcaption>
                 </figure>
             </div>
 
@@ -453,14 +473,21 @@
             `</svg>`;
     })();
 
-    // Fig 2: Productivity-Wage Gap
-    (function(){
+    // Fig 2: Productivity-Wage Gap (interactive)
+    function renderGapChart(automation, displacement){
         const w=720,h=280,pad=46;
         const X=i=>pad+(i/10)*(w-pad*1.6);
         const prod=[],wage=[];
+        // automation (0-100): steepness of productivity curve
+        const prodScale=0.35+(automation/100)*1.1;
+        // displacement (0-100): how much wage lags behind productivity
+        const wageTrack=0.75-(displacement/100)*0.65;
         for(let i=0;i<=10;i++){
-            prod.push([X(i), h-pad-(i/10)*(h-pad*1.9)]);
-            wage.push([X(i), h-pad-(0.55*Math.pow(i/10,0.55)+0.05)*(h-pad*1.9)*0.7]);
+            const t=i/10;
+            const prodH=Math.min(t*prodScale,1.0);
+            prod.push([X(i), h-pad-prodH*(h-pad*1.85)]);
+            const wageH=Math.max(0,Math.min(Math.pow(t,1+displacement/100*0.8)*prodScale*wageTrack,1.0));
+            wage.push([X(i), h-pad-wageH*(h-pad*1.85)]);
         }
         const lp=prod.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
         const lw=wage.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ');
@@ -474,6 +501,17 @@
             `<text class="chart-axis" x="${pad}" y="${h-14}">2015</text>`+
             `<text class="chart-axis" x="${w-pad*0.5}" y="${h-14}" text-anchor="end">2030</text>`+
             `</svg>`;
+    }
+    (function(){
+        renderGapChart(50,50);
+        document.getElementById('fig2-auto').addEventListener('input',function(){
+            document.getElementById('fig2-v-auto').textContent=this.value;
+            renderGapChart(parseInt(this.value),parseInt(document.getElementById('fig2-disp').value));
+        });
+        document.getElementById('fig2-disp').addEventListener('input',function(){
+            document.getElementById('fig2-v-disp').textContent=this.value;
+            renderGapChart(parseInt(document.getElementById('fig2-auto').value),parseInt(this.value));
+        });
     })();
 
     // Fig 3: Reshoring bars
