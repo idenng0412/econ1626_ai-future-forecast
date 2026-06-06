@@ -39,6 +39,12 @@
         .fig2-ends { display: flex; justify-content: space-between; font-family: monospace; font-size: 10px; color: #718096; margin-top: 6px; }
         @media(max-width:600px){ .fig2-controls { flex-direction: column; gap: 16px; } }
 
+        /* Fig 3 pixel map */
+        #chart-world canvas { width:100%; height:auto; display:block; border-radius:6px; }
+        .fig3-legend { display:flex; gap:18px; flex-wrap:wrap; margin-top:12px; padding:4px 0; }
+        .fig3-leg { display:flex; align-items:center; gap:6px; font-family:monospace; font-size:10px; color:#4a5568; }
+        .fig3-swatch { width:12px; height:12px; border-radius:2px; flex-shrink:0; }
+
         /* Policy Table */
         .policy-table-wrap { overflow-x: auto; margin-bottom: 48px; border-radius: 10px; border: 1px solid #e2e8f0; }
         .policy-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
@@ -219,8 +225,20 @@
                 <p>By making complex networks cheaper to coordinate, AI reshapes firms’ decisions about what to make in-house and where to locate production, which transaction-cost economics treats as central to supply-chain structure (Coase 1937; Williamson 1985). Although lower coordination costs alone could further support offshoring, automation changes the calculation by reducing firms’ dependence on production labour, weakening the cheap-labour advantage on which many developing-country supply chains were built (Baglioni 2021). As the cost savings from locating production in low-wage economies decline, firms become less dependent on geographically dispersed supply chains and more likely to favour regionalisation or reshoring.</p>
                 <p>Evidence of this shift is already visible: approximately two million manufacturing jobs have returned to the United States since 2010, with automation identified as a key driver (Moser and Kelley 2024). By 2030, increasingly autonomous supply chain coordination is likely to accelerate this trend, shifting competitive advantage away from low-cost labour and towards data, technology, and organisational capabilities. While advanced economies may benefit from increased domestic production, developing economies that rely on labour-cost advantages could face declining competitiveness and reduced participation in global supply chains.</p>
                 <figure class="chart-figure">
-                    <div id="chart-reshore"></div>
-                    <figcaption>Fig. 3 — Manufacturing jobs returning to the United States (illustrative trend, cumulative to ~2 million since 2010). As automation narrows the labour-cost gap, the offshore base erodes and production regionalises.</figcaption>
+                    <div class="fig2-controls">
+                        <div class="fig2-dial">
+                            <label class="fig2-label">Logistics Optimisation <span id="fig3-v-opt">0</span></label>
+                            <input type="range" id="fig3-opt" min="0" max="100" value="0">
+                            <div class="fig2-ends"><span>baseline</span><span>full AI optimisation</span></div>
+                        </div>
+                    </div>
+                    <div id="chart-world"></div>
+                    <div class="fig3-legend">
+                        <span class="fig3-leg"><span class="fig3-swatch" style="background:#475569"></span>Developed — reshoring beneficiary</span>
+                        <span class="fig3-leg"><span class="fig3-swatch" id="fig3-sw-unred" style="background:#64748b"></span>Developing — not yet displaced</span>
+                        <span class="fig3-leg"><span class="fig3-swatch" style="background:#dc2626"></span>Developing — displaced by logistics AI</span>
+                    </div>
+                    <figcaption>Fig. 3 — Geographic impact of logistics AI optimisation (illustrative). As AI raises supply-chain efficiency, automation narrows the labour-cost advantage of developing economies. Regions turn red sequentially from the weakest economies (Africa first) to the largest developing economy (China last).</figcaption>
                 </figure>
             </div>
         </div>
@@ -514,25 +532,109 @@
         });
     })();
 
-    // Fig 3: Reshoring bars
+    // Fig 3: Pixelated world map (canvas)
     (function(){
-        const w=720,h=280,pad=46;
-        const vals=[0.12,0.18,0.20,0.16,0.22,0.28,0.30,0.26,0.34,0.40,0.44,0.50,0.62,0.244];
-        const years=['10','11','12','13','14','15','16','17','18','19','20','21','22','24'];
-        const max=0.7;
-        const bw=(w-pad*1.5)/vals.length;
-        let bars='',grid='';
-        for(let g=0;g<=4;g++){const y=h-pad-(g/4)*(h-pad*1.9);grid+=`<line class="chart-gridline" x1="${pad}" y1="${y.toFixed(1)}" x2="${w-pad*0.4}" y2="${y.toFixed(1)}"/>`;}
-        vals.forEach((v,i)=>{
-            const bh=(v/max)*(h-pad*1.9);
-            const x=pad+i*bw+4;
-            const y=h-pad-bh;
-            bars+=`<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(bw-8).toFixed(1)}" height="${bh.toFixed(1)}" fill="#5a67d8" opacity="0.8" rx="2"/>`;
-            bars+=`<text class="chart-axis" x="${(x+(bw-8)/2).toFixed(1)}" y="${h-14}" text-anchor="middle">${years[i]}</text>`;
+        const COLS=90,ROWS=45,SC=8; // 4° per cell, 8px scale
+        const W=COLS*SC, H=ROWS*SC;
+        const container=document.getElementById('chart-world');
+        const cv=document.createElement('canvas');
+        cv.width=W; cv.height=H;
+        cv.style.cssText='width:100%;height:auto;display:block;border-radius:6px;';
+        container.appendChild(cv);
+        const ctx=cv.getContext('2d');
+
+        // Region codes: 0=ocean,1=developed,2=Africa(first red),3=MiddleEast,
+        //               4=LatAm,5=SEAsia mainland,6=SEAsia islands,7=S.Asia,8=China(last)
+        function getRegion(col,row){
+            const lon=col*4-178, lat=88-row*4;
+            if(lat<-56) return 0;
+            // Developed
+            if(lon>=128&&lon<=148&&lat>=30&&lat<=46) return 1; // Japan
+            if(lon>=124&&lon<=132&&lat>=34&&lat<=40) return 1; // S.Korea
+            if(lon>=-10&&lon<=46&&lat>=36&&lat<=74)  return 1; // Europe
+            if(lon>=-74&&lon<=-14&&lat>=60&&lat<=84) return 1; // Greenland
+            if(lon>=-142&&lon<=-52&&lat>=46&&lat<=84)return 1; // Canada
+            if(lon>=-170&&lon<=-138&&lat>=54&&lat<=72)return 1;// Alaska
+            if(lon>=-126&&lon<=-64&&lat>=24&&lat<=50)return 1; // USA
+            if(lon>=112&&lon<=154&&lat>=-44&&lat<=-20)return 1;// Australia
+            if(lon>=164&&lon<=178&&lat>=-48&&lat<=-34)return 1;// NZ
+            // China — before Russia so eastern border is correct
+            if(lon>=98&&lon<=136&&lat>=18&&lat<=50)  return 8;
+            if(lon>=73&&lon<=98&&lat>=32&&lat<=50)   return 8; // Tibet/Xinjiang
+            // Russia (after China)
+            if(lon>=24&&lon<=180&&lat>=50&&lat<=78)  return 1;
+            // South Asia
+            if(lon>=58&&lon<=98&&lat>=4&&lat<=36)    return 7;
+            // SE Asia mainland
+            if(lon>=92&&lon<=112&&lat>=2&&lat<=28)   return 5;
+            // SE Asia islands (Indonesia, Philippines, Malaysia, PNG)
+            if(lon>=96&&lon<=142&&lat>=-4&&lat<=8)   return 6;
+            if(lon>=116&&lon<=128&&lat>=4&&lat<=22)  return 6;
+            if(lon>=140&&lon<=156&&lat>=-6&&lat<=0)  return 6;
+            // Latin America
+            if(lon>=-120&&lon<=-76&&lat>=6&&lat<=34) return 4;
+            if(lon>=-86&&lon<=-58&&lat>=8&&lat<=24)  return 4; // Caribbean
+            if(lon>=-84&&lon<=-34&&lat>=-56&&lat<=14)return 4;
+            // Middle East + Central Asia
+            if(lon>=32&&lon<=68&&lat>=12&&lat<=44)   return 3;
+            if(lon>=48&&lon<=90&&lat>=34&&lat<=56)   return 3;
+            // Africa (checked last among land — catches N.Africa & Horn)
+            if(lon>=-20&&lon<=32&&lat>=-36&&lat<=36) return 2;
+            if(lon>=32&&lon<=52&&lat>=-14&&lat<=14)  return 2; // Horn of Africa
+            return 0;
+        }
+
+        // Slider threshold: region turns red when opt >= threshold
+        // Order: Africa → MiddleEast → LatAm → SEAsia mainland → SEAsia islands → S.Asia → China
+        const THR={2:2, 3:18, 4:34, 5:50, 6:60, 7:74, 8:88};
+
+        function lerp(a,b,t){return a+(b-a)*Math.min(1,Math.max(0,t));}
+
+        // Pre-compute region grid once
+        const grid=new Uint8Array(COLS*ROWS);
+        for(let r=0;r<ROWS;r++) for(let c=0;c<COLS;c++) grid[r*COLS+c]=getRegion(c,r);
+
+        function draw(opt){
+            // BG: very dark navy (shows in 1px gaps between cells)
+            ctx.fillStyle='#0f172a';
+            ctx.fillRect(0,0,W,H);
+
+            for(let r=0;r<ROWS;r++){
+                for(let c=0;c<COLS;c++){
+                    const code=grid[r*COLS+c];
+                    let R,G,B;
+                    if(code===0){
+                        // Ocean: dark blue, drawn so gaps are even darker
+                        [R,G,B]=[15,35,80];
+                    } else if(code===1){
+                        // Developed: medium slate
+                        [R,G,B]=[71,85,105];
+                    } else {
+                        const thr=THR[code];
+                        if(opt>=thr){
+                            // Transition to red over 14 units
+                            const p=Math.min(1,(opt-thr)/14);
+                            R=Math.round(lerp(100,220,p));
+                            G=Math.round(lerp(116,38,p));
+                            B=Math.round(lerp(139,38,p));
+                        } else {
+                            // Not yet red: medium gray
+                            [R,G,B]=[100,116,139];
+                        }
+                    }
+                    // Draw cell with 1px gap (SC-1 size, offset by 1)
+                    ctx.fillStyle=`rgb(${R},${G},${B})`;
+                    ctx.fillRect(c*SC+1, r*SC+1, SC-1, SC-1);
+                }
+            }
+        }
+
+        draw(0);
+        document.getElementById('fig3-opt').addEventListener('input',function(){
+            const v=parseInt(this.value);
+            document.getElementById('fig3-v-opt').textContent=v;
+            draw(v);
         });
-        document.getElementById('chart-reshore').innerHTML=svgOpen(w,h)+grid+bars+
-            `<text class="chart-axis" x="${pad}" y="${pad-8}">jobs reshored / yr (hundreds of thousands) ↑</text>`+
-            `</svg>`;
     })();
 
     /* ---- Simulator ---- */
