@@ -157,7 +157,6 @@
                 <li><a href="#simulator">Simulator</a></li>
                 <li><a href="#scenarios">Scenarios</a></li>
                 <li><a href="#policy">Policy</a></li>
-                <li class="nav-button"><a href="#about">About</a></li>
             </ul>
         </div>
     </nav>
@@ -197,7 +196,7 @@
             <div class="capability-card">
                 <h3>Predictive Analytics and Firm-Level Concentration</h3>
                 <p>AI enables predictive analytics by processing large volumes of real-time data into accurate forecasts, reducing the uncertainty that forces firms to hold costly safety stock and over-provision capacity. As forecasts tighten, firms run leaner inventories, suffer fewer stockouts, and increase vehicle and warehouse utilisation, which can lower logistics costs by 5 to 20 percent and inventory by 20 to 30 percent (Oca et al. 2024). Mechanically, these gains widen margins and pass partly to consumers as lower prices, while dampening the bullwhip effect through improved allocative efficiency (Lee, Padmanabhan & Whang 1997).</p>
-                <p>However, forecasting accuracy depends on data scale, where firms with the largest datasets can train better models and win more business, creating a self-reinforcing flywheel (Jones & Tonetti 2020). As agentic systems become deeply involved in planning and execution across the chain by 2030, this process intensifies the divergence at the firm level, where value gains concentrate among hyperscalers and established firms while smaller ones struggle to keep pace (Singla et al. 2025).</p>
+                <p>However, forecasting accuracy depends on data scale, where firms with the largest datasets can train better models and win more business, creating a self-reinforcing flywheel (Jones & Tonetti 2020). As agentic systems become deeply involved in planning and execution across the chain by 2030, this process intensifies the divergence at the firm level, where value gains concentrate among hyperscalers and established firms while smaller ones struggle to keep pace due to increases in barriers to entry(Singla et al. 2025).</p>
                 <figure class="chart-figure">
                     <div class="fig2-controls">
                         <div class="fig2-dial">
@@ -207,7 +206,7 @@
                         </div>
                     </div>
                     <div id="chart-flywheel" style="display:flex;gap:12px;align-items:flex-start;"></div>
-                    <figcaption>Fig. 1 — Firm efficiency and market capture (illustrative). As data scale grows, large firms and hyperscalers pull away from smaller ones; the efficiency gap widens and their market share climbs steeply.</figcaption>
+                    <figcaption>Fig. 1 — Firm productivity and market capture (illustrative). As data scale grows, large firms pull away from smaller ones; the productivity gap widens and their market share climbs steeply.</figcaption>
                 </figure>
             </div>
 
@@ -412,12 +411,12 @@
             <h2>Methods & Limitations</h2>
             <div class="methods-box">
                 <h3>Forecast Approach</h3>
-                <p>This forecast uses a scenario-based approach to examine how AI may reshape global logistics by 2030, drawing on two tiers of evidence. The first tier is peer-reviewed economic theory: the task model of automation (Acemoglu and Restrepo 2019), transaction-cost economics (Coase 1937; Williamson 1985), the economics of data (Jones and Tonetti 2020), the bullwhip effect (Lee, Padmanabhan and Whang 1997), and global value-chain research on cheap labour and production networks (Baglioni 2021). These sources provide the theoretical foundation for analysing productivity, labour displacement, data concentration, and changes in supply-chain geography. The second tier draws on industry, journalistic, and institutional sources, including McKinsey, the New York Times, the Reshoring Initiative, and the World Economic Forum, treated as indicative of direction and scale rather than precise measurement. Generative AI tools supported structuring, drafting, coding, and visual design, while the final argument, evidence selection, and policy judgement were reviewed and edited by the author.</p>
+                <p>This forecast uses a scenario-based approach drawing on two tiers of evidence. The first are peer-reviewed economic theories and journal articles: the task model of automation (Acemoglu and Restrepo 2019), transaction-cost economics (Coase 1937; Williamson 1985), the economics of data (Jones and Tonetti 2020), the bullwhip effect (Lee, Padmanabhan and Whang 1997), and value-chain research on cheap labour (Baglioni 2021). The second draws on industry and institutional sources (McKinsey, the New York Times, the Reshoring Initiative, and the World Economic Forum), treated as indicative of direction and scale rather than precise measurement. Generative AI tools were used to support coding and designing interactive features, while the arguments, evidence selection, and policy judgement were the author's.</p>
                 <h3>Central Assumption</h3>
-                <p>The central assumption is that AI adoption continues to expand from pilot projects into operational systems, particularly through predictive analytics, warehouse automation, route optimisation, and autonomous coordination tools. On this basis, the forecast is structured around three causal channels: firm-level productivity and concentration, labour-market displacement, and supply-chain geography.</p>
+                <p>The central assumption anchoring the forecast is that AI adoption continues moving from pilots into operational systems and technological capabilities advance across all scenarios. Therefore, the scenarios forecast differ not in the technology or whether AI improves but in how its gains diffuse, how labour is reabsorbed, and how actively policy responds.</p>
                 <h3>Limitation</h3>
                 <p style="font-size: 1.15rem; color: #1a202c; font-weight: 600; margin-top: 30px; padding: 20px; background: #f0f4ff; border-left: 4px solid #5a67d8;">
-                    The pace and distribution of adoption remain uncertain, depending on data access, capital investment, workforce capability, regulation, and international coordination. The forecast is therefore limited by uncertainty and should be read as directional pathways rather than precise predictions.
+                    The forecast has three main limitations. First, sector-specific global data on AI adoption in logistics remains uneven, so some firm-level and economy-wide estimates are used as proxies. Second, the scenarios are qualitative, driver-based projections rather than a calibrated economic model, meaning they simplify complex interactions between firms, workers, policy, and global trade. Third, the forecast assumes broad continuity in technological and geopolitical conditions, so major shocks or discontinuous leaps in AI capability could alter the trajectory. For these reasons, the scenarios should be read as directional pathways rather than point predictions.
                 </p>
             </div>
         </div>
@@ -509,7 +508,7 @@
             const ent=[], small=[];
             // Enterprise: linear lift that grows with data scale (like "output per worker" in Fig 2)
             const entScale = 0.55 + (s/100)*0.30;
-            // Small firms: captured efficiency lags and curves below as data scale rises (like "labour income")
+            // Small firms: captured productivity lags and curves below as data scale rises (like "labour income")
             const smallLag = 0.96 - (s/100)*0.38;
             const smallExp = 1 + (s/100)*0.50;
             // Enterprise starts at a higher baseline (0.20) and grows faster
@@ -534,7 +533,7 @@
                 `<text class="chart-axis" x="${small[10][0]-6}" y="${small[10][1]+16}" text-anchor="end" fill="#e53e3e">small firms</text>`+
                 `<text class="chart-axis" x="${pad}" y="${h-14}">2026</text>`+
                 `<text class="chart-axis" x="${wL-pad*0.5}" y="${h-14}" text-anchor="end">2030</text>`+
-                `<text class="chart-axis" x="${pad}" y="${pad-8}">efficiency ↑</text>`+
+                `<text class="chart-axis" x="${pad}" y="${pad-8}">productivity ↑</text>`+
                 `</svg>`;
 
             // --- Right: Market capture pie chart ---
